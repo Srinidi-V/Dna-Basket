@@ -19,9 +19,19 @@ def Check_Constraint(weight,value,n):
             a.append(0)
     return a
 
+#Function to check when the weight>value constraint is first satisfied
+def Check_First_satisfy(weight,value,n):
+    count = 0
+    for i in range(n):
+        if (weight[i] > value[i]):
+            count = count + 1
+    if count == n :
+        return 1
+    else:
+        return 0
+
 #Main function to collect and manipulate inputs
 def Input_Modification():
-    
     #Number of items
     n = int(input("Number of items:"))
     
@@ -50,9 +60,17 @@ def Input_Modification():
     
     else:
         weight1 = weight
+        weight_first_satisfy = []   #Incase of strings that dont satisfy despite above 20 iterations
+        track = 0   #First weight array that satisfies weight>value condition
+        item_track = 0  #stores the corresponding i value
         while flag==0 and i<20:     #20 - being our own set upperbound for manipulation
             weight1 = [element * i for element in weight]
             max_weight1 = max_weight * i
+            track=Check_First_satisfy(weight1,value,n)
+            #Storing first weight array that satisfies the weight>value condition just in case required
+            if (track == 1) and (item_track == 0):
+                weight_first_satisfy = weight1
+                item_track = i
             i = i + 1
             check_array = Check_Constraint(weight1,value,n)
             if Count(check_array):
@@ -61,10 +79,9 @@ def Input_Modification():
                 return final
             else:
                 continue
-        #In case it still doesnt satisfy, we give our last manipulated value
-        weight1 = [element * i for element in weight]
-        max_weight1 = max_weight * i
-        final = {"weight":weight1, "value":value, "maxWeight":max_weight1}
+        #In case it still doesnt satisfy, we give our first weight>value satisfying array
+        max_weight1 = max_weight * item_track
+        final = {"weight":weight_first_satisfy, "value":value, "maxWeight":max_weight1}
         return final
         
 
