@@ -1,5 +1,4 @@
 import random
-from inputModification import *
 import math
 import csv
 
@@ -79,15 +78,4 @@ def ConnectionCode():
             connection_code["D"+str(k1+1)+str(k2+1)]=cc
     return connection_code
 
-items=Input_Modification()
-Ds,Dx=GenerateStrands(items)
-connection_code=ConnectionCode()
-with open("strings.csv",'w') as tf:
-    csvwriter=csv.writer(tf)
-    csvwriter.writerow(['S.No','Weight','Value'])
-    for i in range(len(Ds)):
-        csvwriter.writerow([i+1,Ds[i],Dx[i]])
-print(items)
-print(Ds)
-print(Dx)
-print(connection_code)
+
