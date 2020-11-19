@@ -67,7 +67,7 @@ def SynthesizeDnaFragments(items):
     dna_combined_fragments = intermediate_selected["selected_f"]
     item_combination = intermediate_selected["selected_i"]
     
-    #Taking the connection codes that are already computed
+    '''#Taking the connection codes that are already computed
     c = items["connection_code"]
     connection_code_list = list(c.values())
     
@@ -88,5 +88,7 @@ def SynthesizeDnaFragments(items):
             selected_fragments.append(dna_f[i])
             selected_items.append(item_combination[i])
     
-    selected_list = {"selected_fragments" : selected_fragments, "selected_items" : selected_items}
+    selected_list = {"selected_fragments" : selected_fragments, "selected_items" : selected_items}'''
+    
+    selected_list= {"selected_fragments" : dna_combined_fragments, "selected_items" : item_combination}
     return selected_list
