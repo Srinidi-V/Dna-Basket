@@ -20,10 +20,10 @@ def Check_Constraint(weight,value,n):
     return a
 
 #Function to check when the weight>value constraint is first satisfied
-def Check_First_satisfy(weight,value,n):
+def Check_First_Satisfy(weight,value,n):
     count = 0
     for i in range(n):
-        if (weight[i] > value[i]):
+        if (weight[i] > value[i] and weight[i]-value[i]>1):
             count = count + 1
     if count == n :
         return 1
@@ -66,7 +66,7 @@ def Input_Modification():
         while flag==0 and i<20:     #20 - being our own set upperbound for manipulation
             weight1 = [element * i for element in weight]
             max_weight1 = max_weight * i
-            track=Check_First_satisfy(weight1,value,n)
+            track=Check_First_Satisfy(weight1,value,n)
             #Storing first weight array that satisfies the weight>value condition just in case required
             if (track == 1) and (item_track == 0):
                 weight_first_satisfy = weight1
@@ -84,5 +84,3 @@ def Input_Modification():
         final = {"weight":weight_first_satisfy, "value":value, "maxWeight":max_weight1}
         return final
         
-
-print(Input_Modification())
