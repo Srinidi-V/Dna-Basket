@@ -1,9 +1,11 @@
 import random
+from inputModification import *
+import math
+import csv
 
 Ds=[]
 Dx=[]
 connection_code={}
-items={'weight': [15, 36, 30, 18, 21, 24], 'value': [7, 10, 12, 8, 11, 10], 'maxWeight': 90}
 letters=['A','T','G','C']
 
 #This function defines the compliments for all letters
@@ -31,6 +33,9 @@ def Continuity(strand):
                 index=y-1
             count=1
         ch=strand[y]
+    if(count>maxi):
+        maxi=count
+        index=len(strand)-1
     return maxi,index
 
 #This function replaces character where continuity occurs
@@ -44,7 +49,7 @@ def Mutate(strand,index):
     return strand
 
 #This generates Ds and Dx strands
-def GenerateStrands(): 
+def GenerateStrands(items): 
     for i,j in zip(items["weight"],items["value"]):
         strand = ''.join(random.choices(letters, k = i))
         maxi,index=Continuity(strand)
@@ -53,29 +58,36 @@ def GenerateStrands():
             maxi,index=Continuity(strand) 
         Ds.append(strand)
         comp=''
-        for k in range((i-j)//2,i-((i-j)//2)):
-            comp=comp+Compliment(strand[k])
+        for k in range(math.ceil((i-j)/2),i-((i-j)//2)):
+            comp=comp+Compliment(strand[k]) 
         Dx.append(comp)
     return Ds,Dx
 
-#This generate connection codes
+#This generates connection codes
 def ConnectionCode():
     for k1 in range(len(Ds)-1):
         for k2 in range(k1+1,len(Ds)):
             cc=''
             l1=len(Ds[k1])
             l2=len(Dx[k1])
-            for x in range((l1-l2)//2 + l2,l1):
+            for x in range(math.ceil((l1-l2)/2) + l2,l1):
                 cc=cc+Compliment(Ds[k1][x])
             l1=len(Ds[k2])
             l2=len(Dx[k2])
-            for x in range((l1-l2)//2):
+            for x in range(math.ceil((l1-l2)/2)):
                 cc=cc+Compliment(Ds[k2][x])
             connection_code["D"+str(k1+1)+str(k2+1)]=cc
     return connection_code
 
-Ds,Dx=GenerateStrands()
+items=Input_Modification()
+Ds,Dx=GenerateStrands(items)
 connection_code=ConnectionCode()
+with open("strings.csv",'w') as tf:
+    csvwriter=csv.writer(tf)
+    csvwriter.writerow(['S.No','Weight','Value'])
+    for i in range(len(Ds)):
+        csvwriter.writerow([i+1,Ds[i],Dx[i]])
+print(items)
 print(Ds)
 print(Dx)
 print(connection_code)
