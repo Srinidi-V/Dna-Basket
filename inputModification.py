@@ -9,11 +9,18 @@ def Count(a):
     else:
         return 0
 
+#Computing item numbers
+def Item_Numbers(n):
+    l=[]
+    for i in range(n):
+        l.append(i+1)
+    return l
+
 #Checks our two constraints as required
 def Check_Constraint(weight,value,n):
     a = []
     for i in range(n):
-        if (weight[i] >= value[i]) and ((weight[i] - value[i]) % 2 == 0):
+        if (weight[i] > value[i]) and ((weight[i] - value[i]) % 2 == 0):
             a.append(1)
         else:
             a.append(0)
@@ -46,6 +53,8 @@ def Input_Modification():
     #Maximum capacity of the bag
     max_weight = int(input("Enter the maximum weight allowed: "))
     
+    item_num = Item_Numbers(n)
+    
     i = 2   #variable to keep track of the multiplier
     flag = 0    #check value
     
@@ -55,7 +64,7 @@ def Input_Modification():
     #If satisfied as given
     if Count(check_array):
         flag = 1
-        final = {"weight":weight, "value":value, "maxWeight":max_weight}
+        final = {"item_numbers":item_num, "weight":weight, "value":value, "max_weight":max_weight}
         return final
     
     else:
@@ -75,12 +84,12 @@ def Input_Modification():
             check_array = Check_Constraint(weight1,value,n)
             if Count(check_array):
                 flag = 1
-                final = {"weight":weight1, "value":value, "maxWeight":max_weight1}
+                final = {"item_numbers":item_num, "weight":weight1, "value":value, "max_weight":max_weight1}
                 return final
             else:
                 continue
         #In case it still doesnt satisfy, we give our first weight>value satisfying array
         max_weight1 = max_weight * item_track
-        final = {"weight":weight_first_satisfy, "value":value, "maxWeight":max_weight1}
+        final = {"item_numbers":item_num, "weight":weight_first_satisfy, "value":value, "max_weight":max_weight1}
         return final
         
