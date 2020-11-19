@@ -41,7 +41,7 @@ def Check_First_Satisfy(weight,value,n):
 def Input_Modification():
     #Number of items
     n = int(input("Number of items:"))
-    
+
     weight = []     #List containing respective weights of items
     value = []      #List containing respective values of items
     
@@ -91,5 +91,5 @@ def Input_Modification():
         #In case it still doesnt satisfy, we give our first weight>value satisfying array
         max_weight1 = max_weight * item_track
         final = {"item_numbers":item_num, "weight":weight_first_satisfy, "value":value, "max_weight":max_weight1}
-        return final
+        return final,item_track
         
