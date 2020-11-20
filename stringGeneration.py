@@ -1,6 +1,5 @@
 import random
 import math
-import csv
 
 Ds=[]
 Dx=[]
@@ -52,11 +51,13 @@ def GenerateStrands(items):
     for i,j in zip(items["weight"],items["value"]):
         strand = ''.join(random.choices(letters, k = i))
         maxi,index=Continuity(strand)
+        #Mutating until condition satisfied
         while(maxi>2):
             strand=Mutate(strand,index)
             maxi,index=Continuity(strand) 
         Ds.append(strand)
         comp=''
+        #Getting the center strand complement of Ds as Dx
         for k in range(math.ceil((i-j)/2),i-((i-j)//2)):
             comp=comp+Compliment(strand[k]) 
         Dx.append(comp)
