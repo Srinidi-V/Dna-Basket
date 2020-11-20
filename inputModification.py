@@ -64,7 +64,7 @@ def Input_Modification():
     #If satisfied as given
     if Count(check_array):
         flag = 1
-        final = {"item_numbers":item_num, "weight":weight, "value":value, "max_weight":max_weight}
+        final = {"item_numbers":item_num, "weight":weight, "value":value, "max_weight":max_weight, "mul_factor":1}
         return final
     
     else:
@@ -84,12 +84,13 @@ def Input_Modification():
             check_array = Check_Constraint(weight1,value,n)
             if Count(check_array):
                 flag = 1
-                final = {"item_numbers":item_num, "weight":weight1, "value":value, "max_weight":max_weight1}
+                final = {"item_numbers":item_num, "weight":weight1, "value":value, "max_weight":max_weight1, "mul_factor":i-1}
                 return final
             else:
                 continue
         #In case it still doesnt satisfy, we give our first weight>value satisfying array
         max_weight1 = max_weight * item_track
-        final = {"item_numbers":item_num, "weight":weight_first_satisfy, "value":value, "max_weight":max_weight1}
-        return final,item_track
+        #print(item_track)
+        final = {"item_numbers":item_num, "weight":weight_first_satisfy, "value":value, "max_weight":max_weight1, "mul_factor":item_track}
+        return final
         
