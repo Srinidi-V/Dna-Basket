@@ -1,5 +1,3 @@
-from stringGeneration import *
-
 #Function to generate all subsets to find all possible combinations of strings
 def StringCombinations(l): 
     base = [] 
@@ -11,7 +9,8 @@ def StringCombinations(l):
             lists[j] = lists[j] + [new]
         lists = orig + lists
     return lists   
-    
+
+#Combine list items into one string - generating a continuous strand of dna
 def DnaCombine(dna_f):
     dna_combined_fragments = []
     for i in dna_f:
@@ -22,12 +21,7 @@ def DnaCombine(dna_f):
         dna_combined_fragments.append(s)
     return dna_combined_fragments
 
-def ComplimentFragment(l):
-    s=""
-    for i in l:
-        s = s + Compliment(i)
-    return s
-
+#Function to remove any empty subset formed
 def RemoveEmptyFragment(l1):
     temp = []
     for i in l1:
@@ -35,7 +29,8 @@ def RemoveEmptyFragment(l1):
         if l!=0:
             temp = temp + [i]
     return temp
-    
+
+#Function to filter out dna strands with weights greater than given capacity     
 def GelElectrophoresis(dna,selected_items,items):
     temp_comb = DnaCombine(dna)
     weight = items["max_weight"]
@@ -48,7 +43,9 @@ def GelElectrophoresis(dna,selected_items,items):
     final = {"selected_f": result , "selected_i" : result1 }
     return final
 
+#Function to create all possible combination fragments and filter out unnecessary ones
 def SynthesizeDnaFragments(items):
+    
     #Taking required inputs for futher manipulation
     l1 = items["item_numbers"] 
     l2 = items["Ds"]
@@ -67,28 +64,6 @@ def SynthesizeDnaFragments(items):
     dna_combined_fragments = intermediate_selected["selected_f"]
     item_combination = intermediate_selected["selected_i"]
     
-    '''#Taking the connection codes that are already computed
-    c = items["connection_code"]
-    connection_code_list = list(c.values())
-    
-    #Tracks connection code count in the combined fragments
-    count_set= []
-    
-    for i in range(len(dna_combined_fragments)):
-        cnt = 0
-        for j in connection_code_list:
-            if ComplimentFragment(j) in dna_combined_fragments[i]:
-                cnt = cnt + 1
-        count_set.append(cnt)
-    
-    selected_fragments = []
-    selected_items = []
-    for i in range(len(dna_combined_fragments)):
-        if (len(dna_f[i]) - 1)==count_set[i]:
-            selected_fragments.append(dna_f[i])
-            selected_items.append(item_combination[i])
-    
-    selected_list = {"selected_fragments" : selected_fragments, "selected_items" : selected_items}'''
-    
+    #contains all processed, selected values
     selected_list= {"selected_fragments" : dna_combined_fragments, "selected_items" : item_combination}
     return selected_list
